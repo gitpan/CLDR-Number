@@ -9,7 +9,7 @@ use Moo::Role;
 # backward incompatible ways in the future. Please use one of the documented
 # classes instead.
 
-our $VERSION = '0.00_02';
+our $VERSION = '0.00_03';
 
 requires qw( BUILD );
 
@@ -111,15 +111,6 @@ sub _set_unless_init_arg {
     return if $self->_has_init_arg($attribute);
 
     $self->$attribute($value);
-}
-
-sub _clear_unless_init_arg {
-    my ($self, $attribute) = @_;
-
-    return if $self->_has_init_arg($attribute);
-
-    my $clearer = "clear_$attribute";
-    $self->$clearer;
 }
 
 sub _build_signs {

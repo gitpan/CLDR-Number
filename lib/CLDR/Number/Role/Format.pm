@@ -12,7 +12,7 @@ use Moo::Role;
 # backward incompatible ways in the future. Please use one of the documented
 # classes instead.
 
-our $VERSION = '0.00_02';
+our $VERSION = '0.00_03';
 
 requires qw( BUILD format );
 
@@ -34,7 +34,6 @@ has minimum_integer_digits => (
         croak "minimum_integer_digits '$_[0]' is invalid"
             if defined $_[0] && !looks_like_number $_[0];
     },
-    default => 1,
 );
 
 has maximum_integer_digits => (
@@ -57,7 +56,6 @@ has minimum_fraction_digits => (
         return if $min <= $self->maximum_fraction_digits;
         $self->{maximum_fraction_digits} = $min;
     },
-    default => 0,
 );
 
 has maximum_fraction_digits => (
@@ -72,7 +70,6 @@ has maximum_fraction_digits => (
         return if $max >= $self->minimum_fraction_digits;
         $self->{minimum_fraction_digits} = $max;
     },
-    default => 3,
 );
 
 has primary_grouping_size => (
@@ -81,8 +78,6 @@ has primary_grouping_size => (
         croak "primary_grouping_size '$_[0]' is invalid"
             if defined $_[0] && !looks_like_number $_[0];
     },
-    default => 3,
-    clearer => 1,
 );
 
 has secondary_grouping_size => (
@@ -91,7 +86,6 @@ has secondary_grouping_size => (
         croak "secondary_grouping_size '$_[0]' is invalid"
             if defined $_[0] && !looks_like_number $_[0];
     },
-    clearer => 1,
 );
 
 has rounding_increment => (
@@ -100,7 +94,6 @@ has rounding_increment => (
         croak "rounding_increment '$_[0]' is invalid"
             if defined $_[0] && !looks_like_number $_[0];
     },
-    default => 0,
 );
 
 before BUILD => sub {
@@ -181,12 +174,12 @@ sub _trigger_pattern {
                         $self->_set_unless_init_arg(secondary_grouping_size => $secondary);
                     }
                     else {
-                        $self->_clear_unless_init_arg('secondary_grouping_size');
+                        $self->_set_unless_init_arg(secondary_grouping_size => 0);
                     }
                 }
                 else {
-                    $self->_clear_unless_init_arg('primary_grouping_size');
-                    $self->_clear_unless_init_arg('secondary_grouping_size');
+                    $self->_set_unless_init_arg(primary_grouping_size   => 0);
+                    $self->_set_unless_init_arg(secondary_grouping_size => 0);
                 }
 
                 s{ ^ \#+ (?= [#0-9] ) }{}x;  # no leading multiple #s

@@ -18,7 +18,8 @@
          "requires" : {
             "Pod::Man" : "2.04",
             "Test::Exception" : "0.22",
-            "Test::More" : "0.82"
+            "Test::More" : "0.82",
+            "Test::Warn" : "0.01"
          }
       },
       "configure" : {
@@ -47,35 +48,35 @@
    "provides" : {
       "CLDR::Number" : {
          "file" : "lib/CLDR/Number.pm",
-         "version" : "0.00_02"
+         "version" : "0.00_03"
       },
       "CLDR::Number::Data::Base" : {
          "file" : "lib/CLDR/Number/Data/Base.pm",
-         "version" : "0.00_02"
+         "version" : "0.00_03"
       },
       "CLDR::Number::Data::Currency" : {
          "file" : "lib/CLDR/Number/Data/Currency.pm",
-         "version" : "0.00_02"
+         "version" : "0.00_03"
       },
       "CLDR::Number::Format::Currency" : {
          "file" : "lib/CLDR/Number/Format/Currency.pm",
-         "version" : "0.00_02"
+         "version" : "0.00_03"
       },
       "CLDR::Number::Format::Decimal" : {
          "file" : "lib/CLDR/Number/Format/Decimal.pm",
-         "version" : "0.00_02"
+         "version" : "0.00_03"
       },
       "CLDR::Number::Format::Percent" : {
          "file" : "lib/CLDR/Number/Format/Percent.pm",
-         "version" : "0.00_02"
+         "version" : "0.00_03"
       },
       "CLDR::Number::Role::Base" : {
          "file" : "lib/CLDR/Number/Role/Base.pm",
-         "version" : "0.00_02"
+         "version" : "0.00_03"
       },
       "CLDR::Number::Role::Format" : {
          "file" : "lib/CLDR/Number/Role/Format.pm",
-         "version" : "0.00_02"
+         "version" : "0.00_03"
       }
    },
    "release_status" : "testing",
@@ -91,5 +92,5 @@
          "url" : "git://github.com/perl-cldr/cldr-number-perl5.git"
       }
    },
-   "version" : "0.00_02"
+   "version" : "0.00_03"
 }
