@@ -6,7 +6,7 @@ use Carp;
 use CLDR::Number::Data::Currency;
 use namespace::clean;
 
-our $VERSION = '0.00_03';
+our $VERSION = '0.01';
 
 with qw( CLDR::Number::Role::Format );
 
@@ -115,7 +115,7 @@ sub format {
         unless $self->currency_code;
 
     my $format = $self->_format_number($num);
-    $format =~ s{¤}{$self->currency_sign}e;
+    $format =~ s{\x{1F0002}}{$self->currency_sign}e;
 
     return $format;
 }
@@ -132,9 +132,9 @@ CLDR::Number::Format::Currency - Localized currency formatter using the Unicode 
 
 =head1 VERSION
 
-This document describes CLDR::Number v0.00_03, built with Unicode CLDR v24. This
-is a development release without full documentation and functionality may
-change. See L<CLDR::Number::TODO>.
+This document describes CLDR::Number::Format::Currency v0.01, built with the
+Unicode CLDR v24. This is an early release without full documentation. See
+L<CLDR::Number::TODO>.
 
 =head1 SYNOPSIS
 
@@ -158,20 +158,27 @@ change. See L<CLDR::Number::TODO>.
     $curf->locale('fr-CA');
     say $curf->format(9.99);  # '9,99 $US' (Canadian French / USD)
 
-=head1 METHODS
+=head1 DESCRIPTION
+
+Localized currency formatter using the Unicode Common Locale Data Repository
+(CLDR).
+
+=head2 Methods
 
 =over
 
 =item format
 
-Accepts a number and returns a formatted currency value using the currency from
-the C<currency_code> attribute and localized with the current locale.
+Accepts a number and returns a formatted currency value as a character string,
+using the currency from the C<currency_code> attribute and localized with the
+current C<locale>.
 
 =back
 
-=head1 ATTRIBUTES
+=head2 Attributes
 
-See also the L<common attributes in CLDR::Number|CLDR::Number/"COMMON ATTRIBUTES">.
+All string attributes are expected to be character strings. See also the
+L<common attributes in CLDR::Number|CLDR::Number/"Common Attributes">.
 
 =over
 
@@ -207,9 +214,13 @@ Default: C<2> when C<root> locale
 
 Default: C<3> when C<root> locale
 
+Not used when value is C<0>.
+
 =item secondary_grouping_size
 
-Default: not set when C<root> locale
+Default: C<0> when C<root> locale
+
+Not used when value is C<0>.
 
 =item rounding_increment
 
@@ -220,6 +231,8 @@ Default: C<0> when C<root> locale
 =head1 SEE ALSO
 
 =over
+
+=item * L<CLDR::Number>
 
 =item * L<CLDR Translation Guidelines: Currency Symbols|http://cldr.unicode.org/translation/currency-names>
 
@@ -236,7 +249,7 @@ L<code.shutterstock.com|http://code.shutterstock.com/>.
 
 =head1 COPYRIGHT AND LICENSE
 
-© 2013 Nick Patch
+© 2013 Shutterstock, Inc.
 
 This library is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.

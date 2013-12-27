@@ -3,7 +3,7 @@ package CLDR::Number::Format::Percent;
 use utf8;
 use Moo;
 
-our $VERSION = '0.00_03';
+our $VERSION = '0.01';
 
 with qw( CLDR::Number::Role::Format );
 
@@ -47,8 +47,8 @@ sub format {
         $sign   = $self->percent_sign;
     }
 
-    my $format = $self->_format_number($num * $factor, $self->pattern);
-    $format =~ s{%}{$sign};
+    my $format = $self->_format_number($num * $factor);
+    $format =~ s{\x{1F0001}}{$sign};
 
     return $format;
 }
@@ -65,9 +65,9 @@ CLDR::Number::Format::Percent - Localized percent formatter using the Unicode CL
 
 =head1 VERSION
 
-This document describes CLDR::Number v0.00_03, built with Unicode CLDR v24. This
-is a development release without full documentation and functionality may
-change. See L<CLDR::Number::TODO>.
+This document describes CLDR::Number::Format::Percent v0.01, built with the
+Unicode CLDR v24. This is an early release without full documentation. See
+L<CLDR::Number::TODO>.
 
 =head1 SYNOPSIS
 
@@ -88,21 +88,27 @@ change. See L<CLDR::Number::TODO>.
     $perf->permil(1);
     say $perf->format(0.05);  # '50 ‰' (French per mil)
 
-=head1 METHODS
+=head1 DESCRIPTION
+
+Localized percent formatter using the Unicode Common Locale Data Repository
+(CLDR).
+
+=head2 Methods
 
 =over
 
 =item format
 
-Accepts a number and returns a formatted percent, localized with the current
-locale. If the C<permil> attribute is true, returns I<per mil> instead of
-I<percent>.
+Accepts a number and returns a formatted percent as a character string,
+localized with the current C<locale>. If the C<permil> attribute is true,
+returns I<per mil> instead of I<percent>.
 
 =back
 
-=head1 ATTRIBUTES
+=head1 Attributes
 
-See also the L<common attributes in CLDR::Number|CLDR::Number/"COMMON ATTRIBUTES">.
+All string attributes are expected to be character strings. See also the
+L<common attributes in CLDR::Number|CLDR::Number/"Common Attributes">.
 
 =over
 
@@ -138,15 +144,23 @@ Default: C<0> when C<root> locale
 
 Default: C<3> when C<root> locale
 
+Not used when value is C<0>.
+
 =item secondary_grouping_size
 
-Default: not set when C<root> locale
+Default: C<0> when C<root> locale
+
+Not used when value is C<0>.
 
 =item rounding_increment
 
 Default: C<0> when C<root> locale
 
 =back
+
+=head1 SEE ALSO
+
+L<CLDR::Number>
 
 =head1 AUTHOR
 
@@ -159,7 +173,7 @@ L<code.shutterstock.com|http://code.shutterstock.com/>.
 
 =head1 COPYRIGHT AND LICENSE
 
-© 2013 Nick Patch
+© 2013 Shutterstock, Inc.
 
 This library is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.

@@ -9,7 +9,7 @@ use charnames qw( :full );
 # backward incompatible ways in the future. Please use one of the documented
 # classes instead.
 
-our $VERSION = '0.00_03';
+our $VERSION = '0.01';
 
 our $DATA = {
     root => {
@@ -889,7 +889,7 @@ our $DATA = {
     },
     'fa-AF' => {
         patterns => {
-            percent => "'\N{LEFT-TO-RIGHT EMBEDDING}'#,##0%'\N{POP DIRECTIONAL FORMATTING}'",
+            percent => "\N{LEFT-TO-RIGHT EMBEDDING}#,##0%\N{POP DIRECTIONAL FORMATTING}",
         },
     },
     ff => {
@@ -3016,6 +3016,136 @@ our $DATA = {
         vi-VN vo vo-001 vun-TZ wae-CH wal-ET xh-ZA xog-UG yav-CM yo-NG zgh-MA
         zh-Hans zh-Hans-CN zh-Hant-MO zh-Hant-TW zu-ZA
     )
+};
+
+# using non-Unicode codepoints as placeholders:
+# $N: formatted number
+# $P: percent sign
+# $C: currency sign
+# $M: minus sign
+my ($N, $P, $C, $M) = map { chr } 0x1F0000 .. 0x1F0003;
+
+our $CACHE = {
+    patterns => {
+        '#0%'                         => [ '#0',          "$N$P"             ],
+        '#,##0%'                      => [ '#,##0',       "$N$P"             ],
+        '#,##0 %'                     => [ '#,##0',       "$N $P"            ],
+        '#,##,##0%'                   => [ '#,##,##0',    "$N$P"             ],
+        '#,##,##0 %'                  => [ '#,##,##0',    "$N $P"            ],
+        '%#,##0'                      => [ '#,##0',       "$P$N"             ],
+        '% #,##0'                     => [ '#,##0',       "$P $N"            ],
+        '#0.00 ¤'                     => [ '#0.00',       "$N $C"            ],
+        '#,##0.00¤'                   => [ '#,##0.00',    "$N$C"             ],
+        '#,##0.00 ¤'                  => [ '#,##0.00',    "$N $C"            ],
+        '#,##,##0.00¤'                => [ '#,##,##0.00', "$N$C"             ],
+        '#,##,##0.00¤;(#,##,##0.00¤)' => [ '#,##,##0.00', "$N$C",  "($N$C)"  ],
+        '¤#0.00'                      => [ '#0.00',       "$C$N"             ],
+        '¤#,##0.00'                   => [ '#,##0.00',    "$C$N"             ],
+        '¤#,##0.00;¤-#,##0.00'        => [ '#,##0.00',    "$C$N",  "$C$M$N"  ],
+        '¤#,##0.00;¤- #,##0.00'       => [ '#,##0.00',    "$C$N",  "$C$M $N" ],
+        '¤#,##0.00;(¤#,##0.00)'       => [ '#,##0.00',    "$C$N",  "($C$N)"  ],
+        '¤#,##,##0.00'                => [ '#,##,##0.00', "$C$N"             ],
+        '¤ #0.00'                     => [ '#0.00',       "$C $N"            ],
+        '¤ #,##0.00'                  => [ '#,##0.00',    "$C $N"            ],
+        '¤ #,##0.00;¤-#,##0.00'       => [ '#,##0.00',    "$C $N", "$C$M$N"  ],
+        '¤ #,##0.00;¤ -#,##0.00'      => [ '#,##0.00',    "$C $N", "$C $M$N" ],
+        '¤ #,##0.00;¤ #,##0.00-'      => [ '#,##0.00',    "$C $N", "$C $N$M" ],
+        '¤ #,##,##0.00'               => [ '#,##,##0.00', "$C $N"            ],
+        "\N{LEFT-TO-RIGHT EMBEDDING}#,##0%\N{POP DIRECTIONAL FORMATTING}" => [
+            '#,##0',
+            "\N{LEFT-TO-RIGHT EMBEDDING}$N$P\N{POP DIRECTIONAL FORMATTING}"
+        ],
+        "¤#,##0.00\N{LEFT-TO-RIGHT MARK}" => [
+            '#,##0.00',
+            "$C$N\N{LEFT-TO-RIGHT MARK}"
+        ],
+        "\N{LEFT-TO-RIGHT MARK}¤#,##0.00" => [
+            '#,##0.00',
+            "\N{LEFT-TO-RIGHT MARK}$C$N"
+        ],
+    },
+    attributes => {
+        '#0' => {
+            minimum_integer_digits  => 1,
+            minimum_fraction_digits => 0,
+            maximum_fraction_digits => 0,
+            primary_grouping_size   => 0,
+            secondary_grouping_size => 0,
+            rounding_increment      => 0,
+        },
+        '#0.00' => {
+            minimum_integer_digits  => 1,
+            minimum_fraction_digits => 2,
+            maximum_fraction_digits => 2,
+            primary_grouping_size   => 0,
+            secondary_grouping_size => 0,
+            rounding_increment      => 0,
+        },
+        '#0.###' => {
+            minimum_integer_digits  => 1,
+            minimum_fraction_digits => 0,
+            maximum_fraction_digits => 3,
+            primary_grouping_size   => 0,
+            secondary_grouping_size => 0,
+            rounding_increment      => 0,
+        },
+        '#0.######' => {
+            minimum_integer_digits  => 1,
+            minimum_fraction_digits => 0,
+            maximum_fraction_digits => 6,
+            primary_grouping_size   => 0,
+            secondary_grouping_size => 0,
+            rounding_increment      => 0,
+        },
+        '#,##0' => {
+            minimum_integer_digits  => 1,
+            minimum_fraction_digits => 0,
+            maximum_fraction_digits => 0,
+            primary_grouping_size   => 3,
+            secondary_grouping_size => 0,
+            rounding_increment      => 0,
+        },
+        '#,##0.00' => {
+            minimum_integer_digits  => 1,
+            minimum_fraction_digits => 2,
+            maximum_fraction_digits => 2,
+            primary_grouping_size   => 3,
+            secondary_grouping_size => 0,
+            rounding_increment      => 0,
+        },
+        '#,##0.###' => {
+            minimum_integer_digits  => 1,
+            minimum_fraction_digits => 0,
+            maximum_fraction_digits => 3,
+            primary_grouping_size   => 3,
+            secondary_grouping_size => 0,
+            rounding_increment      => 0,
+        },
+        '#,##,##0' => {
+            minimum_integer_digits  => 1,
+            minimum_fraction_digits => 0,
+            maximum_fraction_digits => 0,
+            primary_grouping_size   => 3,
+            secondary_grouping_size => 2,
+            rounding_increment      => 0,
+        },
+        '#,##,##0.00' => {
+            minimum_integer_digits  => 1,
+            minimum_fraction_digits => 2,
+            maximum_fraction_digits => 2,
+            primary_grouping_size   => 3,
+            secondary_grouping_size => 2,
+            rounding_increment      => 0,
+        },
+        '#,##,##0.###' => {
+            minimum_integer_digits  => 1,
+            minimum_fraction_digits => 0,
+            maximum_fraction_digits => 3,
+            primary_grouping_size   => 3,
+            secondary_grouping_size => 2,
+            rounding_increment      => 0,
+        },
+    },
 };
 
 1;
