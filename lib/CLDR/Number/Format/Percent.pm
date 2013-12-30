@@ -3,7 +3,7 @@ package CLDR::Number::Format::Percent;
 use utf8;
 use Moo;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 with qw( CLDR::Number::Role::Format );
 
@@ -65,7 +65,7 @@ CLDR::Number::Format::Percent - Localized percent formatter using the Unicode CL
 
 =head1 VERSION
 
-This document describes CLDR::Number::Format::Percent v0.01, built with the
+This document describes CLDR::Number::Format::Percent v0.02, built with the
 Unicode CLDR v24. This is an early release without full documentation. See
 L<CLDR::Number::TODO>.
 
@@ -73,16 +73,16 @@ L<CLDR::Number::TODO>.
 
     # either
     use CLDR::Number::Format::Percent;
-    my $perf = CLDR::Number::Format::Percent->new(locale => 'eu');
+    my $perf = CLDR::Number::Format::Percent->new(locale => 'tr');
 
     # or
     use CLDR::Number;
     my $cldr = CLDR::Number->new(locale => 'tr');
     my $perf = $cldr->percent_formatter;
 
-    say $perf->format(0.05);  # '%5' (Basque percent)
+    say $perf->format(0.05);  # '%5' (Turkish percent)
 
-    $perf->locale('es');
+    $perf->locale('fr');
     say $perf->format(0.05);  # '5 %' (French percent)
 
     $perf->permil(1);
@@ -105,7 +105,7 @@ returns I<per mil> instead of I<percent>.
 
 =back
 
-=head1 Attributes
+=head2 Attributes
 
 All string attributes are expected to be character strings. See also the
 L<common attributes in CLDR::Number|CLDR::Number/"Common Attributes">.
@@ -155,6 +155,8 @@ Not used when value is C<0>.
 =item rounding_increment
 
 Default: C<0> when C<root> locale
+
+C<0> and C<1> are treated the same.
 
 =back
 

@@ -6,7 +6,7 @@ use Carp;
 use CLDR::Number::Data::Currency;
 use namespace::clean;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 with qw( CLDR::Number::Role::Format );
 
@@ -132,7 +132,7 @@ CLDR::Number::Format::Currency - Localized currency formatter using the Unicode 
 
 =head1 VERSION
 
-This document describes CLDR::Number::Format::Currency v0.01, built with the
+This document describes CLDR::Number::Format::Currency v0.02, built with the
 Unicode CLDR v24. This is an early release without full documentation. See
 L<CLDR::Number::TODO>.
 
@@ -184,11 +184,11 @@ L<common attributes in CLDR::Number|CLDR::Number/"Common Attributes">.
 
 =item currency_code
 
-Default: not set
+Default: I<none>
 
 =item currency_sign
 
-Default: not set
+Default: I<none>
 
 =item cash
 
@@ -225,6 +225,8 @@ Not used when value is C<0>.
 =item rounding_increment
 
 Default: C<0> when C<root> locale
+
+C<0> and C<1> are treated the same.
 
 =back
 

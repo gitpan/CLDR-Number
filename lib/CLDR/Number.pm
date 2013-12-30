@@ -3,7 +3,7 @@ package CLDR::Number;
 use utf8;
 use Moo;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 with qw( CLDR::Number::Role::Base );
 
@@ -50,7 +50,7 @@ CLDR::Number - Localized number formatters using the Unicode CLDR
 
 =head1 VERSION
 
-This document describes CLDR::Number v0.01, built with the Unicode CLDR v24.
+This document describes CLDR::Number v0.02, built with the Unicode CLDR v24.
 This is an early release without full documentation. See L<CLDR::Number::TODO>.
 
 =head1 SYNOPSIS
@@ -125,7 +125,7 @@ well as any attributes passed to this method.
 
 =back
 
-=head1 Common Attributes
+=head2 Common Attributes
 
 Common attributes among all formatter objects. All string attributes are
 expected to be character strings, not encoded byte strings.
@@ -136,13 +136,23 @@ expected to be character strings, not encoded byte strings.
 
 Default: value of C<default_locale> attribute if exists, otherwise C<root>
 
-Valid: Unicode locale identifier
+Valid: I<Unicode locale identifier>
+
+Examples: C<es> (Spanish), C<es-ES> (European Spanish), C<es-419> (Latin
+American Spanish), C<zh-Hant> (Traditional Chinese), C<zh-Hans> (Simplified
+Chinese), C<chr> (Cherokee)
+
+The locale is case-insensitive and can use either C<-> (hyphen-minus) or C<_>
+(low line) as a separator.
 
 =item default_locale
 
-Default: none
+Default: I<none>
 
-Valid: Unicode locale identifier
+Valid: I<Unicode locale identifier>
+
+Use this if you want a locale other than the generic C<root> if the C<locale>
+attribute is not set or not valid.
 
 =item decimal_sign
 
@@ -163,6 +173,9 @@ Default: C<-> when C<root> locale
 =item cldr_version
 
 Value: C<24>
+
+This is a read-only attribute that will always reflect the currently supported
+Unicode CLDR version.
 
 =back
 

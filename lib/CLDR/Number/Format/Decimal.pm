@@ -3,7 +3,7 @@ package CLDR::Number::Format::Decimal;
 use utf8;
 use Moo;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 with qw( CLDR::Number::Role::Format );
 
@@ -46,7 +46,7 @@ CLDR::Number::Format::Decimal - Localized decimal formatter using the Unicode CL
 
 =head1 VERSION
 
-This document describes CLDR::Number::Format::Decimal v0.01, built with the
+This document describes CLDR::Number::Format::Decimal v0.02, built with the
 Unicode CLDR v24. This is an early release without full documentation. See
 L<CLDR::Number::TODO>.
 
@@ -135,6 +135,8 @@ Not used when value is C<0>.
 =item rounding_increment
 
 Default: C<0> when C<root> locale
+
+C<0> and C<1> are treated the same.
 
 =item infinity
 

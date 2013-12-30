@@ -2,7 +2,7 @@ NAME
     CLDR::Number - Localized number formatters using the Unicode CLDR
 
 VERSION
-    This document describes CLDR::Number v0.01, built with the Unicode CLDR
+    This document describes CLDR::Number v0.02, built with the Unicode CLDR
     v24. This is an early release without full documentation. See
     CLDR::Number::TODO.
 
@@ -71,7 +71,7 @@ DESCRIPTION
         attributes from your CLDR::Number object as well as any attributes
         passed to this method.
 
-Common Attributes
+  Common Attributes
     Common attributes among all formatter objects. All string attributes are
     expected to be character strings, not encoded byte strings.
 
@@ -79,12 +79,22 @@ Common Attributes
         Default: value of "default_locale" attribute if exists, otherwise
         "root"
 
-        Valid: Unicode locale identifier
+        Valid: *Unicode locale identifier*
+
+        Examples: "es" (Spanish), "es-ES" (European Spanish), "es-419"
+        (Latin American Spanish), "zh-Hant" (Traditional Chinese), "zh-Hans"
+        (Simplified Chinese), "chr" (Cherokee)
+
+        The locale is case-insensitive and can use either "-" (hyphen-minus)
+        or "_" (low line) as a separator.
 
     default_locale
-        Default: none
+        Default: *none*
 
-        Valid: Unicode locale identifier
+        Valid: *Unicode locale identifier*
+
+        Use this if you want a locale other than the generic "root" if the
+        "locale" attribute is not set or not valid.
 
     decimal_sign
         Default: "." when "root" locale
@@ -100,6 +110,9 @@ Common Attributes
 
     cldr_version
         Value: 24
+
+        This is a read-only attribute that will always reflect the currently
+        supported Unicode CLDR version.
 
 SEE ALSO
     *   UTS #35: Unicode LDML, Part 3: Numbers
