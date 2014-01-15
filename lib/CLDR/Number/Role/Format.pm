@@ -12,7 +12,7 @@ use CLDR::Number::Data::Base;
 # backward incompatible ways in the future. Please use one of the documented
 # classes instead.
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 requires qw( BUILD format );
 
@@ -387,6 +387,11 @@ sub at_least {
     my ($self, $num) = @_;
     my $pattern = $self->_get_data(patterns => 'atleast');
 
+    if (!defined $num) {
+        carp 'Use of uninitialized value in at_least';
+        return undef;
+    }
+
     $num = $self->format($num);
     $pattern =~ s{ \{ 0 \} }{$num}x;
 
@@ -398,6 +403,11 @@ sub range {
     my $pattern = $self->_get_data(patterns => 'range');
 
     for my $i (0, 1) {
+        if (!defined $nums[$i]) {
+            carp 'Use of uninitialized value in range';
+            return undef;
+        }
+
         $nums[$i] = $self->format($nums[$i]);
         $pattern =~ s{ \{ $i \} }{$nums[$i]}x;
     }

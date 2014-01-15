@@ -6,7 +6,7 @@ use Carp;
 use CLDR::Number::Data::Currency;
 use namespace::clean;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 with qw( CLDR::Number::Role::Format );
 
@@ -111,6 +111,11 @@ sub _trigger_cash {
 sub format {
     my ($self, $num) = @_;
 
+    if (!defined $num) {
+        carp 'Use of uninitialized value in format';
+        return undef;
+    }
+
     croak 'Missing required attribute: currency_code'
         unless $self->currency_code;
 
@@ -132,7 +137,7 @@ CLDR::Number::Format::Currency - Localized currency formatter using the Unicode 
 
 =head1 VERSION
 
-This document describes CLDR::Number::Format::Currency v0.02, built with the
+This document describes CLDR::Number::Format::Currency v0.03, built with the
 Unicode CLDR v24. This is an early release without full documentation. See
 L<CLDR::Number::TODO>.
 
@@ -251,7 +256,7 @@ L<code.shutterstock.com|http://code.shutterstock.com/>.
 
 =head1 COPYRIGHT AND LICENSE
 
-© 2013 Shutterstock, Inc.
+© 2013–2014 Shutterstock, Inc.
 
 This library is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.

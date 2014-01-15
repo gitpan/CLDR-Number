@@ -2,8 +2,10 @@ package CLDR::Number::Format::Percent;
 
 use utf8;
 use Moo;
+use Carp;
+use namespace::clean;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 with qw( CLDR::Number::Role::Format );
 
@@ -38,6 +40,11 @@ sub format {
     my ($self, $num) = @_;
     my ($factor, $sign);
 
+    if (!defined $num) {
+        carp 'Use of uninitialized value in format';
+        return undef;
+    }
+
     if ($self->permil) {
         $factor = 1_000;
         $sign   = $self->permil_sign;
@@ -65,7 +72,7 @@ CLDR::Number::Format::Percent - Localized percent formatter using the Unicode CL
 
 =head1 VERSION
 
-This document describes CLDR::Number::Format::Percent v0.02, built with the
+This document describes CLDR::Number::Format::Percent v0.03, built with the
 Unicode CLDR v24. This is an early release without full documentation. See
 L<CLDR::Number::TODO>.
 
@@ -175,7 +182,7 @@ L<code.shutterstock.com|http://code.shutterstock.com/>.
 
 =head1 COPYRIGHT AND LICENSE
 
-© 2013 Shutterstock, Inc.
+© 2013–2014 Shutterstock, Inc.
 
 This library is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.
