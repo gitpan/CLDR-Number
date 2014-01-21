@@ -3,10 +3,11 @@ package CLDR::Number::Format::Currency;
 use utf8;
 use Moo;
 use Carp;
+use CLDR::Number::Constant qw( $C );
 use CLDR::Number::Data::Currency;
 use namespace::clean;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 with qw( CLDR::Number::Role::Format );
 
@@ -119,8 +120,20 @@ sub format {
     croak 'Missing required attribute: currency_code'
         unless $self->currency_code;
 
+    my $sign   = $self->currency_sign;
     my $format = $self->_format_number($num);
-    $format =~ s{\x{1F0002}}{$self->currency_sign}e;
+
+    # spacing before currency sign
+    if ($sign =~ m{ ^ \PS }x && $format =~ m{ \d $C }x) {
+        $sign = ' ' . $sign;
+    }
+
+    # spacing after currency sign
+    if ($sign =~ m{ \PS $ }x && $format =~ m{ $C \d }x) {
+        $sign .= ' ';
+    }
+
+    $format =~ s{$C}{$sign};
 
     return $format;
 }
@@ -137,7 +150,7 @@ CLDR::Number::Format::Currency - Localized currency formatter using the Unicode 
 
 =head1 VERSION
 
-This document describes CLDR::Number::Format::Currency v0.03, built with the
+This document describes CLDR::Number::Format::Currency v0.04, built with the
 Unicode CLDR v24. This is an early release without full documentation. See
 L<CLDR::Number::TODO>.
 
