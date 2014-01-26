@@ -49,39 +49,39 @@
    "provides" : {
       "CLDR::Number" : {
          "file" : "lib/CLDR/Number.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       },
       "CLDR::Number::Constant" : {
          "file" : "lib/CLDR/Number/Constant.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       },
       "CLDR::Number::Data::Base" : {
          "file" : "lib/CLDR/Number/Data/Base.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       },
       "CLDR::Number::Data::Currency" : {
          "file" : "lib/CLDR/Number/Data/Currency.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       },
       "CLDR::Number::Format::Currency" : {
          "file" : "lib/CLDR/Number/Format/Currency.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       },
       "CLDR::Number::Format::Decimal" : {
          "file" : "lib/CLDR/Number/Format/Decimal.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       },
       "CLDR::Number::Format::Percent" : {
          "file" : "lib/CLDR/Number/Format/Percent.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       },
       "CLDR::Number::Role::Base" : {
          "file" : "lib/CLDR/Number/Role/Base.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       },
       "CLDR::Number::Role::Format" : {
          "file" : "lib/CLDR/Number/Role/Format.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       }
    },
    "release_status" : "stable",
@@ -97,5 +97,5 @@
          "url" : "git://github.com/perl-cldr/cldr-number-perl5.git"
       }
    },
-   "version" : "0.04"
+   "version" : "0.05"
 }

@@ -1,13 +1,14 @@
 package CLDR::Number::Format::Currency;
 
 use utf8;
-use Moo;
 use Carp;
 use CLDR::Number::Constant qw( $C );
 use CLDR::Number::Data::Currency;
+
+use Moo;
 use namespace::clean;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 with qw( CLDR::Number::Role::Format );
 
@@ -112,10 +113,8 @@ sub _trigger_cash {
 sub format {
     my ($self, $num) = @_;
 
-    if (!defined $num) {
-        carp 'Use of uninitialized value in format';
-        return undef;
-    }
+    $num = $self->_validate_number(format => $num);
+    return undef unless defined $num;
 
     croak 'Missing required attribute: currency_code'
         unless $self->currency_code;
@@ -150,9 +149,8 @@ CLDR::Number::Format::Currency - Localized currency formatter using the Unicode 
 
 =head1 VERSION
 
-This document describes CLDR::Number::Format::Currency v0.04, built with the
-Unicode CLDR v24. This is an early release without full documentation. See
-L<CLDR::Number::TODO>.
+This document describes CLDR::Number::Format::Currency v0.05, built with Unicode
+CLDR v24.
 
 =head1 SYNOPSIS
 
@@ -253,6 +251,8 @@ C<0> and C<1> are treated the same.
 =over
 
 =item * L<CLDR::Number>
+
+=item * L<CLDR::Number::TODO>
 
 =item * L<CLDR Translation Guidelines: Currency Symbols|http://cldr.unicode.org/translation/currency-names>
 
