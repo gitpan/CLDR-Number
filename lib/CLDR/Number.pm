@@ -1,11 +1,12 @@
 package CLDR::Number;
 
+use v5.8.1;
 use utf8;
 
 use Moo;
 use namespace::clean;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 with qw( CLDR::Number::Role::Base );
 
@@ -52,7 +53,7 @@ CLDR::Number - Localized number formatters using the Unicode CLDR
 
 =head1 VERSION
 
-This document describes CLDR::Number v0.05, built with Unicode CLDR v24.
+This document describes CLDR::Number v0.06, built with Unicode CLDR v24.
 
 =head1 SYNOPSIS
 
@@ -97,10 +98,10 @@ use with many of the world’s locales.
 
 This class provides common attributes shared among the supported formatter
 classes as well as methods to instantiate decimal, percent, and currency
-formatter objects. The value for any attribute (such as C<locale>) will be
-passed to the formatter objects on instantiation but can be overwritten by
-manually passing another value for the attribute or calling a setter method on
-the formatter object.
+formatter objects. The value for any attribute (such as B<locale> or
+B<decimal_sign>) will be passed to the formatter objects on instantiation but
+can be overwritten by manually passing another value for the attribute or
+calling a setter method on the formatter object.
 
 =head2 Methods
 
@@ -128,16 +129,18 @@ well as any attributes passed to this method.
 
 =head2 Common Attributes
 
-Common attributes among all formatter objects. All string attributes are
-expected to be character strings, not encoded byte strings.
+These are common attributes among this class and all formatter classes. All
+attributes other than B<locale>, B<default_locale>, and B<cldr_version> have
+defaults that change depending on the current B<locale>. All string attributes
+are expected to be character strings, not byte strings.
 
 =over
 
 =item locale
 
-Default: value of C<default_locale> attribute if exists, otherwise C<root>
+Default: value of B<default_locale> attribute if it exists, otherwise C<root>
 
-Valid: I<Unicode locale identifier>
+Valid: Unicode locale identifiers
 
 Examples: C<es> (Spanish), C<es-ES> (European Spanish), C<es-419> (Latin
 American Spanish), C<zh-Hant> (Traditional Chinese), C<zh-Hans> (Simplified
@@ -148,28 +151,28 @@ The locale is case-insensitive and can use either C<-> (hyphen-minus) or C<_>
 
 =item default_locale
 
-Default: I<none>
+Default: none
 
-Valid: I<Unicode locale identifier>
+Valid: Unicode locale identifiers
 
-Use this if you want a locale other than the generic C<root> if the C<locale>
+Use this if you want a locale other than the generic C<root> if the B<locale>
 attribute is not set or not valid.
 
 =item decimal_sign
 
-Default: C<.> when C<root> locale
+Examples: C<.> (full stop) for B<root>, B<en>; C<,> (comma) for B<de>, B<fr>
 
 =item group_sign
 
-Default: C<,> when C<root> locale
+Examples: C<,> (comma) for B<root>, B<en>; C<.> (full stop) for B<de>; C< > (no-break space) for B<fr>
 
 =item plus_sign
 
-Default: C<+> when C<root> locale
+Examples: C<+> (plus sign) for B<root>, B<en>, and most locales
 
 =item minus_sign
 
-Default: C<-> when C<root> locale
+Examples: C<-> (hyphen-minus) for B<root>, B<en>, and most locales
 
 =item cldr_version
 
@@ -188,6 +191,8 @@ are therefore not supported in custom patterns and signs.
 =head1 SEE ALSO
 
 =over
+
+=item * L<CLDR::Number::FAQ>
 
 =item * L<CLDR::Number::TODO>
 

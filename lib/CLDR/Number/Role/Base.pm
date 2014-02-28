@@ -1,5 +1,6 @@
 package CLDR::Number::Role::Base;
 
+use v5.8.1;
 use utf8;
 use Carp;
 use CLDR::Number::Data::Base;
@@ -10,7 +11,7 @@ use Moo::Role;
 # backward incompatible ways in the future. Please use one of the documented
 # classes instead.
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 requires qw( BUILD );
 

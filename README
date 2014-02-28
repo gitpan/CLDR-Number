@@ -2,7 +2,7 @@ NAME
     CLDR::Number - Localized number formatters using the Unicode CLDR
 
 VERSION
-    This document describes CLDR::Number v0.05, built with Unicode CLDR v24.
+    This document describes CLDR::Number v0.06, built with Unicode CLDR v24.
 
 SYNOPSIS
         use CLDR::Number;
@@ -46,9 +46,9 @@ DESCRIPTION
     This class provides common attributes shared among the supported
     formatter classes as well as methods to instantiate decimal, percent,
     and currency formatter objects. The value for any attribute (such as
-    "locale") will be passed to the formatter objects on instantiation but
-    can be overwritten by manually passing another value for the attribute
-    or calling a setter method on the formatter object.
+    locale or decimal_sign) will be passed to the formatter objects on
+    instantiation but can be overwritten by manually passing another value
+    for the attribute or calling a setter method on the formatter object.
 
   Methods
     decimal_formatter
@@ -70,14 +70,16 @@ DESCRIPTION
         passed to this method.
 
   Common Attributes
-    Common attributes among all formatter objects. All string attributes are
-    expected to be character strings, not encoded byte strings.
+    These are common attributes among this class and all formatter classes.
+    All attributes other than locale, default_locale, and cldr_version have
+    defaults that change depending on the current locale. All string
+    attributes are expected to be character strings, not byte strings.
 
     locale
-        Default: value of "default_locale" attribute if exists, otherwise
+        Default: value of default_locale attribute if it exists, otherwise
         "root"
 
-        Valid: *Unicode locale identifier*
+        Valid: Unicode locale identifiers
 
         Examples: "es" (Spanish), "es-ES" (European Spanish), "es-419"
         (Latin American Spanish), "zh-Hant" (Traditional Chinese), "zh-Hans"
@@ -87,24 +89,25 @@ DESCRIPTION
         or "_" (low line) as a separator.
 
     default_locale
-        Default: *none*
+        Default: none
 
-        Valid: *Unicode locale identifier*
+        Valid: Unicode locale identifiers
 
         Use this if you want a locale other than the generic "root" if the
-        "locale" attribute is not set or not valid.
+        locale attribute is not set or not valid.
 
     decimal_sign
-        Default: "." when "root" locale
+        Examples: "." (full stop) for root, en; "," (comma) for de, fr
 
     group_sign
-        Default: "," when "root" locale
+        Examples: "," (comma) for root, en; "." (full stop) for de; " "
+        (no-break space) for fr
 
     plus_sign
-        Default: "+" when "root" locale
+        Examples: "+" (plus sign) for root, en, and most locales
 
     minus_sign
-        Default: "-" when "root" locale
+        Examples: "-" (hyphen-minus) for root, en, and most locales
 
     cldr_version
         Value: 24
@@ -117,6 +120,8 @@ NOTES
     internally and are therefore not supported in custom patterns and signs.
 
 SEE ALSO
+    *   CLDR::Number::FAQ
+
     *   CLDR::Number::TODO
 
     *   UTS #35: Unicode LDML, Part 3: Numbers

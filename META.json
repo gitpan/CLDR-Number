@@ -4,7 +4,7 @@
       "Nick Patch <patch@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4203",
+   "generated_by" : "Module::Build version 0.4205",
    "license" : [
       "perl_5"
    ],
@@ -16,15 +16,18 @@
    "prereqs" : {
       "build" : {
          "requires" : {
+            "English" : "0",
             "Pod::Man" : "2.04",
             "Test::Exception" : "0.22",
             "Test::More" : "0.82",
-            "Test::Warn" : "0.01"
+            "Test::Warn" : "0.01",
+            "open" : "0"
          }
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.3622"
+            "Module::Build" : "0.3622",
+            "Software::License" : "0"
          }
       },
       "runtime" : {
@@ -49,53 +52,53 @@
    "provides" : {
       "CLDR::Number" : {
          "file" : "lib/CLDR/Number.pm",
-         "version" : "0.05"
+         "version" : "0.06"
       },
       "CLDR::Number::Constant" : {
          "file" : "lib/CLDR/Number/Constant.pm",
-         "version" : "0.05"
+         "version" : "0.06"
       },
       "CLDR::Number::Data::Base" : {
          "file" : "lib/CLDR/Number/Data/Base.pm",
-         "version" : "0.05"
+         "version" : "0.06"
       },
       "CLDR::Number::Data::Currency" : {
          "file" : "lib/CLDR/Number/Data/Currency.pm",
-         "version" : "0.05"
+         "version" : "0.06"
       },
       "CLDR::Number::Format::Currency" : {
          "file" : "lib/CLDR/Number/Format/Currency.pm",
-         "version" : "0.05"
+         "version" : "0.06"
       },
       "CLDR::Number::Format::Decimal" : {
          "file" : "lib/CLDR/Number/Format/Decimal.pm",
-         "version" : "0.05"
+         "version" : "0.06"
       },
       "CLDR::Number::Format::Percent" : {
          "file" : "lib/CLDR/Number/Format/Percent.pm",
-         "version" : "0.05"
+         "version" : "0.06"
       },
       "CLDR::Number::Role::Base" : {
          "file" : "lib/CLDR/Number/Role/Base.pm",
-         "version" : "0.05"
+         "version" : "0.06"
       },
       "CLDR::Number::Role::Format" : {
          "file" : "lib/CLDR/Number/Role/Format.pm",
-         "version" : "0.05"
+         "version" : "0.06"
       }
    },
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/perl-cldr/cldr-number-perl5/issues"
+         "web" : "https://github.com/perl-cldr/cldr-number-pm5/issues"
       },
-      "homepage" : "https://github.com/perl-cldr/cldr-number-perl5",
+      "homepage" : "https://github.com/perl-cldr/cldr-number-pm5",
       "license" : [
          "http://dev.perl.org/licenses/"
       ],
       "repository" : {
-         "url" : "git://github.com/perl-cldr/cldr-number-perl5.git"
+         "url" : "git://github.com/perl-cldr/cldr-number-pm5.git"
       }
    },
-   "version" : "0.05"
+   "version" : "0.06"
 }

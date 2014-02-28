@@ -7,9 +7,12 @@ my $builder = Module::Build->new(
     license       => 'Perl_5',
     create_readme => 1,
     configure_requires => {
-        'Module::Build' => '0.3622',
+        'Module::Build'     => '0.3622',
+        'Software::License' => 0,
     },
     build_requires => {
+        'open'            => 0,
+        'English'         => 0,
         'Pod::Man'        => '2.04',
         'Test::Exception' => '0.22',
         'Test::More'      => '0.82',
@@ -33,9 +36,9 @@ my $builder = Module::Build->new(
     },
     meta_merge => {
         resources => {
-            repository => 'git://github.com/perl-cldr/cldr-number-perl5.git',
-            homepage   => 'https://github.com/perl-cldr/cldr-number-perl5',
-            bugtracker => 'https://github.com/perl-cldr/cldr-number-perl5/issues',
+            repository => 'git://github.com/perl-cldr/cldr-number-pm5.git',
+            homepage   => 'https://github.com/perl-cldr/cldr-number-pm5',
+            bugtracker => 'https://github.com/perl-cldr/cldr-number-pm5/issues',
         },
     },
 );

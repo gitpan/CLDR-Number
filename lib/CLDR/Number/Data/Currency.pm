@@ -1,5 +1,6 @@
 package CLDR::Number::Data::Currency;
 
+use v5.8.1;
 use utf8;
 use strict;
 use warnings;
@@ -9,7 +10,7 @@ use charnames qw( :full );
 # backward incompatible ways in the future. Please use one of the documented
 # classes instead.
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 our $LOCALES = {
     root => {
