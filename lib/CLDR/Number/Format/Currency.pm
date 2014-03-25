@@ -9,7 +9,7 @@ use CLDR::Number::Data::Currency;
 use Moo;
 use namespace::clean;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 with qw( CLDR::Number::Role::Format );
 
@@ -56,7 +56,7 @@ after _trigger_locale => sub {
         $self->_build_currency_sign;
     }
 
-    if (my $decimal = $self->_get_data(symbols => 'currency_decimal')) {
+    if (my $decimal = $self->_get_data(symbol => 'currency_decimal')) {
         $self->decimal_sign($decimal);
     }
 };
@@ -150,7 +150,7 @@ CLDR::Number::Format::Currency - Localized currency formatter using the Unicode 
 
 =head1 VERSION
 
-This document describes CLDR::Number::Format::Currency v0.06, built with Unicode
+This document describes CLDR::Number::Format::Currency v0.07, built with Unicode
 CLDR v24.
 
 =head1 SYNOPSIS
@@ -167,13 +167,17 @@ CLDR v24.
     my $cldr = CLDR::Number->new(locale => 'en');
     my $curf = $cldr->currency_formatter(currency_code => 'USD');
 
-    say $curf->format(9.99);  # '$9.99' (English / USD)
+    say $curf->format(9.99);  # '$9.99' (English / US dollars)
 
     $curf->locale('en-CA');
-    say $curf->format(9.99);  # 'US$9.99' (Canadian English / USD)
+    say $curf->format(9.99);  # 'US$9.99' (Canadian English / US dollars)
 
     $curf->locale('fr-CA');
-    say $curf->format(9.99);  # '9,99 $US' (Canadian French / USD)
+    say $curf->format(9.99);  # '9,99 $US' (Canadian French / US dollars)
+
+    $curf->locale('bn');
+    $curf->currency_code('INR');
+    say $curf->format(123456);  # '১,২৩,৪৫৬.০০₹' (Bengali / Indian rupees)
 
 =head1 DESCRIPTION
 
@@ -194,11 +198,12 @@ current locale.
 
 =head2 Attributes
 
-The common attributes B<locale>, B<default_locale>, B<decimal_sign>,
-B<group_sign>, B<plus_sign>, B<minus_sign>, and B<cldr_version> are described
-under L<common attributes in CLDR::Number|CLDR::Number/"Common Attributes">. All
-attributes described here other than B<currency_code> and B<cash> have defaults
-that change depending on the current B<locale>. The attributes B<currency_sign>,
+The common attributes B<locale>, B<default_locale>, B<numbering_system>,
+B<decimal_sign>, B<group_sign>, B<plus_sign>, B<minus_sign>, and B<cldr_version>
+are described under L<common attributes in
+CLDR::Number|CLDR::Number/"Common Attributes">. All attributes described here
+other than B<currency_code> and B<cash> have defaults that change depending on
+the current B<locale>. The attributes B<currency_sign>,
 B<minimum_fraction_digits>, B<maximum_fraction_digits>, and
 B<rounding_increment> also change depending on the B<currency_code> and B<cash>
 values. All string attributes are expected to be character strings, not byte

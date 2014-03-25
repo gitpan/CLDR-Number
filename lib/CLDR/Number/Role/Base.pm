@@ -4,6 +4,7 @@ use v5.8.1;
 use utf8;
 use Carp;
 use CLDR::Number::Data::Base;
+use CLDR::Number::Data::System;
 
 use Moo::Role;
 
@@ -11,7 +12,7 @@ use Moo::Role;
 # backward incompatible ways in the future. Please use one of the documented
 # classes instead.
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 requires qw( BUILD );
 
@@ -47,6 +48,18 @@ has default_locale => (
 
         return;
     },
+);
+
+has numbering_system => (
+    is  => 'rw',
+    isa => sub {
+        carp 'numbering_system is not defined'
+            unless defined $_[0];
+        carp "numbering_system '$_[0]' is unknown"
+            unless exists $CLDR::Number::Data::System::DATA->{$_[0]};
+    },
+    coerce  => sub { defined $_[0] ? lc $_[0] : $_[0] },
+    trigger => 1,
 );
 
 # TODO: length NYI
@@ -125,7 +138,7 @@ sub _build_signs {
 
         $sign =~ s{ _sign $ }{}x;
 
-        $self->$attribute($self->_get_data(symbols => $sign));
+        $self->$attribute($self->_get_data(symbol => $sign));
     }
 }
 
@@ -141,8 +154,9 @@ sub _trigger_locale {
     }
     elsif ($self->default_locale) {
         $locale = $self->default_locale;
+        ($lang, $script, $region, $ext) = _split_locale($locale);
         $self->_locale_inheritance(
-            _build_inheritance( _split_locale($locale) )
+            _build_inheritance($lang, $script, $region, $ext)
         );
     }
     else {
@@ -150,9 +164,25 @@ sub _trigger_locale {
         $self->_locale_inheritance( [$locale] );
     }
 
+    if ($ext && $ext =~ m{ -nu- ( [^-]+ ) }x) {
+        $self->numbering_system($1);
+    }
+    else {
+        $self->_trigger_numbering_system;
+    }
+
     $self->{locale} = $locale;
 
     $self->_build_signs(qw{ decimal_sign group_sign plus_sign minus_sign });
+}
+
+sub _trigger_numbering_system {
+    my ($self, $system) = @_;
+
+    return if defined $system
+           && exists $CLDR::Number::Data::System::DATA->{$system};
+
+    $self->{numbering_system} = $self->_get_data(system => 'default');
 }
 
 sub _split_locale {

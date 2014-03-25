@@ -8,6 +8,7 @@ use Math::BigFloat;
 use Math::Round;
 use CLDR::Number::Constant qw( $N $M $P $C $Q );
 use CLDR::Number::Data::Base;
+use CLDR::Number::Data::System;
 
 use Moo::Role;
 
@@ -15,7 +16,7 @@ use Moo::Role;
 # backward incompatible ways in the future. Please use one of the documented
 # classes instead.
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 requires qw( BUILD format );
 
@@ -123,7 +124,7 @@ sub _build_pattern {
     my ($self) = @_;
 
     $self->_set_unless_init_arg(
-        pattern => $self->_get_data(patterns => $self->_pattern_type)
+        pattern => $self->_get_data(pattern => $self->_pattern_type)
     );
 }
 
@@ -132,22 +133,22 @@ sub _trigger_pattern {
 
     my $cache = $CLDR::Number::Data::Base::CACHE;
     if (my $attributes
-        =  $cache->{attributes}{$input_pattern}
-        || $cache->{patterns}{$input_pattern}
-        && $cache->{attributes}{ $cache->{patterns}{$input_pattern}[0] }) {
+        =  $cache->{attribute}{$input_pattern}
+        || $cache->{pattern}{$input_pattern}
+        && $cache->{attribute}{ $cache->{pattern}{$input_pattern}[0] }) {
 
         while (my ($attribute, $value) = each %$attributes) {
             $self->_set_unless_init_arg($attribute => $value);
         }
 
-        my $patterns = $cache->{patterns}{$input_pattern};
+        my $pattern = $cache->{pattern}{$input_pattern};
 
         $self->_positive_pattern(
-            $patterns && $patterns->[1] || $N
+            $pattern && $pattern->[1] || $N
         );
 
         $self->_negative_pattern(
-            $patterns && $patterns->[2] || $M . $self->_positive_pattern
+            $pattern && $pattern->[2] || $M . $self->_positive_pattern
         );
 
         return;
@@ -279,6 +280,14 @@ sub _format_number {
         $num_format .= $self->decimal_sign . $frac;
     }
 
+    if ($self->numbering_system ne 'latn') {
+        my $digits = $CLDR::Number::Data::System::DATA->{
+            $self->numbering_system
+        };
+
+        $num_format =~ s{ ( [0-9] ) }{$digits->[$1]}xg;
+    }
+
     my $format = do { if ($negative) {
         my $pattern = $self->_negative_pattern;
         $pattern =~ s{$M}{$self->minus_sign}e;
@@ -394,7 +403,7 @@ sub _escape_symbols {
 
 sub at_least {
     my ($self, $num) = @_;
-    my $pattern = $self->_get_data(patterns => 'atleast');
+    my $pattern = $self->_get_data(pattern => 'at_least');
 
     $num = $self->_validate_number(at_least => $num);
     return undef unless defined $num;
@@ -407,7 +416,7 @@ sub at_least {
 
 sub range {
     my ($self, @nums) = @_;
-    my $pattern = $self->_get_data(patterns => 'range');
+    my $pattern = $self->_get_data(pattern => 'range');
 
     for my $i (0, 1) {
         my $num = $self->_validate_number(range => $nums[$i]);

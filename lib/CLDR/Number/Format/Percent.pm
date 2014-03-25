@@ -8,7 +8,7 @@ use CLDR::Number::Constant qw( $P );
 use Moo;
 use namespace::clean;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 with qw( CLDR::Number::Role::Format );
 
@@ -73,7 +73,7 @@ CLDR::Number::Format::Percent - Localized percent formatter using the Unicode CL
 
 =head1 VERSION
 
-This document describes CLDR::Number::Format::Percent v0.06, built with Unicode
+This document describes CLDR::Number::Format::Percent v0.07, built with Unicode
 CLDR v24.
 
 =head1 SYNOPSIS
@@ -88,6 +88,9 @@ CLDR v24.
     my $perf = $cldr->percent_formatter;
 
     say $perf->format(0.05);  # '%5' (Turkish percent)
+
+    $perf->locale('ar');
+    say $perf->format(0.05);  # '٥٪' (Arabic percent)
 
     $perf->locale('fr');
     say $perf->format(0.05);  # '5 %' (French percent)
@@ -114,12 +117,13 @@ I<per mil> instead of I<percent>.
 
 =head2 Attributes
 
-The common attributes B<locale>, B<default_locale>, B<decimal_sign>,
-B<group_sign>, B<plus_sign>, B<minus_sign>, and B<cldr_version> are described
-under L<common attributes in CLDR::Number|CLDR::Number/"Common Attributes">. All
-attributes described here other than B<permil> have defaults that change
-depending on the current B<locale>. All string attributes are expected to be
-character strings, not byte strings.
+The common attributes B<locale>, B<default_locale>, B<numbering_system>,
+B<decimal_sign>, B<group_sign>, B<plus_sign>, B<minus_sign>, and B<cldr_version>
+are described under L<common attributes in
+CLDR::Number|CLDR::Number/"Common Attributes">. All attributes described here
+other than B<permil> have defaults that change depending on the current
+B<locale>. All string attributes are expected to be character strings, not byte
+strings.
 
 =over
 

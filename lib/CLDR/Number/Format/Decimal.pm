@@ -7,7 +7,7 @@ use Carp;
 use Moo;
 use namespace::clean;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 with qw( CLDR::Number::Role::Format );
 
@@ -53,7 +53,7 @@ CLDR::Number::Format::Decimal - Localized decimal formatter using the Unicode CL
 
 =head1 VERSION
 
-This document describes CLDR::Number::Format::Decimal v0.06, built with Unicode
+This document describes CLDR::Number::Format::Decimal v0.07, built with Unicode
 CLDR v24.
 
 =head1 SYNOPSIS
@@ -71,6 +71,12 @@ CLDR v24.
 
     $decf->locale('es-MX');
     say $decf->format(1234.5);  # '1,234.5' (Mexican Spanish)
+
+    $decf->locale('ar');
+    say $decf->format(1234.5);  # '١٬٢٣٤٫٥' (Arabic)
+
+    $curf->locale('bn');
+    say $curf->format(123456);  # '১,২৩,৪৫৬' (Bengali)
 
 =head1 DESCRIPTION
 
@@ -105,12 +111,12 @@ Accepts two numbers and returns a formatted range of decimals.
 
 =head2 Attributes
 
-The common attributes B<locale>, B<default_locale>, B<decimal_sign>,
-B<group_sign>, B<plus_sign>, B<minus_sign>, and B<cldr_version> are described
-under L<common attributes in CLDR::Number|CLDR::Number/"Common Attributes">. All
-attributes described here have defaults that change depending on the current
-B<locale>. All string attributes are expected to be character strings, not byte
-strings.
+The common attributes B<locale>, B<default_locale>, B<numbering_system>,
+B<decimal_sign>, B<group_sign>, B<plus_sign>, B<minus_sign>, and B<cldr_version>
+are described under L<common attributes in
+CLDR::Number|CLDR::Number/"Common Attributes">. All attributes described here
+have defaults that change depending on the current B<locale>. All string
+attributes are expected to be character strings, not byte strings.
 
 =over
 

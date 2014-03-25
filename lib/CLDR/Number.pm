@@ -6,7 +6,7 @@ use utf8;
 use Moo;
 use namespace::clean;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 with qw( CLDR::Number::Role::Base );
 
@@ -53,7 +53,7 @@ CLDR::Number - Localized number formatters using the Unicode CLDR
 
 =head1 VERSION
 
-This document describes CLDR::Number v0.06, built with Unicode CLDR v24.
+This document describes CLDR::Number v0.07, built with Unicode CLDR v24.
 
 =head1 SYNOPSIS
 
@@ -68,6 +68,9 @@ This document describes CLDR::Number v0.06, built with Unicode CLDR v24.
 
     $decf->locale('es-MX');
     say $decf->format(1234.5);  # '1,234.5' (Mexican Spanish)
+
+    $decf->locale('ar');
+    say $decf->format(1234.5);  # '١٬٢٣٤٫٥' (Arabic)
 
     # percents
     my $perf = $cldr->percent_formatter(locale => 'tr');
@@ -91,7 +94,7 @@ This document describes CLDR::Number v0.06, built with Unicode CLDR v24.
 =head1 DESCRIPTION
 
 Software localization includes much more than just translations. Numbers,
-prices, and even percents should all be localized based the user’s language,
+prices, and even percents should all be localized based on the user’s language,
 script, and region. Fortunately, the Unicode Common Locale Data Repository
 (CLDR) provides locale data and specifications for formatting numeric data to
 use with many of the world’s locales.
@@ -157,6 +160,22 @@ Valid: Unicode locale identifiers
 
 Use this if you want a locale other than the generic C<root> if the B<locale>
 attribute is not set or not valid.
+
+=item numbering_system
+
+Valid: currently only decimal numbering systems are supported
+
+Examples: C<latn> (Western Digits), C<arab> (Arabic-Indic Digits), C<hanidec>
+(Chinese Decimal Numerals), C<fullwide> (Full Width Digits)
+
+In the future, algorithmic numbering systems like C<hant> (Traditional Chinese
+Numerals), C<hebr> (Hebrew Numerals), and C<roman> (Roman Numerals) will be
+supported.
+
+The numbering system may alternately be provided as a Unicode locale extension
+subtag. For example, locale C<ja-u-nu-fullwide> for the Japanese language
+(C<ja>) with the numbering system (C<nu>) set to Full Width Digits
+(C<fullwide>).
 
 =item decimal_sign
 
