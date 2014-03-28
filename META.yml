@@ -5,6 +5,7 @@ author:
 build_requires:
   English: 0
   Pod::Man: 2.04
+  Test::Differences: 0
   Test::Exception: 0.22
   Test::More: 0.82
   Test::Warn: 0.01
@@ -22,34 +23,34 @@ name: CLDR-Number
 provides:
   CLDR::Number:
     file: lib/CLDR/Number.pm
-    version: 0.07
+    version: 0.08
   CLDR::Number::Constant:
     file: lib/CLDR/Number/Constant.pm
-    version: 0.07
+    version: 0.08
   CLDR::Number::Data::Base:
     file: lib/CLDR/Number/Data/Base.pm
-    version: 0.07
+    version: 0.08
   CLDR::Number::Data::Currency:
     file: lib/CLDR/Number/Data/Currency.pm
-    version: 0.07
+    version: 0.08
   CLDR::Number::Data::System:
     file: lib/CLDR/Number/Data/System.pm
-    version: 0.07
+    version: 0.08
   CLDR::Number::Format::Currency:
     file: lib/CLDR/Number/Format/Currency.pm
-    version: 0.07
+    version: 0.08
   CLDR::Number::Format::Decimal:
     file: lib/CLDR/Number/Format/Decimal.pm
-    version: 0.07
+    version: 0.08
   CLDR::Number::Format::Percent:
     file: lib/CLDR/Number/Format/Percent.pm
-    version: 0.07
+    version: 0.08
   CLDR::Number::Role::Base:
     file: lib/CLDR/Number/Role/Base.pm
-    version: 0.07
+    version: 0.08
   CLDR::Number::Role::Format:
     file: lib/CLDR/Number/Role/Format.pm
-    version: 0.07
+    version: 0.08
 requires:
   Carp: 0
   Exporter: 0
@@ -70,4 +71,4 @@ resources:
   homepage: https://github.com/perl-cldr/cldr-number-pm5
   license: http://dev.perl.org/licenses/
   repository: git://github.com/perl-cldr/cldr-number-pm5.git
-version: 0.07
+version: 0.08

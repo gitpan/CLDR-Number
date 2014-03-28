@@ -12,7 +12,7 @@ use Moo::Role;
 # backward incompatible ways in the future. Please use one of the documented
 # classes instead.
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 requires qw( BUILD );
 
@@ -222,8 +222,16 @@ sub _build_inheritance {
         my $locale = join '-', @$subtags;
         next if !exists $CLDR::Number::Data::Base::DATA->{$locale};
         push @tree, $locale;
+
+        if (my $parent = $CLDR::Number::Data::Base::PARENT->{$locale}) {
+            push @tree, @{_build_inheritance(_split_locale($parent))};
+            last;
+        }
     }
-    push @tree, 'root';
+
+    if (!@tree || $tree[-1] ne 'root') {
+        push @tree, 'root';
+    }
 
     return \@tree;
 }
